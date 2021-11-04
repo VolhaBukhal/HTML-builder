@@ -1,10 +1,6 @@
 const {stdin, stdout} = process;
 const fs = require('fs');
 const path = require('path');
-const Emitter = require('events');
-const emitter = new Emitter();
-const eventName = 'goodbye';
-
 
 function init() {
   const pathFile = 'text.txt';
@@ -18,7 +14,7 @@ function init() {
         }
       );
     }
-  })
+  });
 }
 init();
 
@@ -38,7 +34,6 @@ stdin.on('data', data=> {
   } else {
     fs.appendFile(path.join(__dirname, 'text.txt'), text, (error) => {
       if (error) return console.error(error.message);
-      console.log('Text is added');
     });
   }
-})
+});
