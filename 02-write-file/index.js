@@ -25,13 +25,14 @@ stdin.on('data', data=> {
     stdout.write('Good luck and bye!');
     process.exit();
   });
-  const text = data.toString();
-  const isExit = text.includes('exit') && (text.indexOf('exit') == text.length - 6);
+  let text = data.toString().trim();
+  const isExit = text.includes('exit') && (text.indexOf('exit') == text.length - 4);
 
   if(isExit) {
     stdout.write('Good luck and bye!');
     process.exit();
   } else {
+    text = text + '\n';
     fs.appendFile(path.join(__dirname, 'text.txt'), text, (error) => {
       if (error) return console.error(error.message);
     });
