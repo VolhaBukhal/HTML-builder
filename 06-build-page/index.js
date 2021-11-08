@@ -8,13 +8,7 @@ const tamplatePath = path.join(path.dirname(__filename),'template.html');
 const componentsPath = path.join(path.dirname(__filename),'components');
 const assetsPath = path.join(path.dirname(__filename),'assets');
 
-fs.access(projectPath, fs.F_OK, (err) => {
-  if (err) {
-    fs.mkdir(projectPath, (err)=> {
-      if(err) return console.log(err.message);
-    });
-  }
-}); 
+
 
 async function concatenateStyles() {
   fs.writeFile(path.join(projectPath, 'style.css'), '' , (err) => {
@@ -37,8 +31,6 @@ async function concatenateStyles() {
     }
   }
 }
-
-concatenateStyles();
 
 async function updateIndex() {
 
@@ -66,8 +58,6 @@ async function updateIndex() {
   }
 }
 
-updateIndex();
-
 function createDir(dirPath, dirName) {
   fs.access(path.join(dirPath, dirName), fs.F_OK, (err) => {
     if (err) {
@@ -84,11 +74,9 @@ function copyDir( ) {
 
   const assetsCopyPath = path.join(projectPath,'assets');
 
-  async function copyFolder(sourcePath, targetPath) {   //sourcePath - assetsPath; targetPath - assetsCopyPath;
+  async function copyFolder(sourcePath, targetPath) {  
     try {
       const files = await fs.promises.readdir(sourcePath);
-
-      console.log(files);
     
       for( let file of files) {
         const filePath = path.join(sourcePath, file);
@@ -114,12 +102,23 @@ function copyDir( ) {
   copyFolder(assetsPath, assetsCopyPath);
 }
 
-copyDir();
 
-// function buildHTML () {
 
-// }
+function buildHTML () {
+  fs.access(projectPath, fs.F_OK, (err) => {
+    if (err) {
+      fs.mkdir(projectPath, (err)=> {
+        if(err) return console.log(err.message);
+      });
+    }
+  }); 
+  
+  concatenateStyles();
+  updateIndex();
+  copyDir();
+  
+}
 
-// buildHTML
+buildHTML();
 
 
