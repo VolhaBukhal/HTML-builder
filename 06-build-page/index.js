@@ -112,11 +112,11 @@ function buildHTML () {
       });
     }
   }); 
-  
+  copyDir();
   concatenateStyles();
   updateIndex();
-  copyDir();
-  
+  console.log('Everything is ready to watch');
+
 }
 
 buildHTML();
