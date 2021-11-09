@@ -1,11 +1,11 @@
-const {stdout} = process;
-const path = require('path');
 const fs = require('fs');
+const path = require('path');
 
-fs.readFile(path.join(path.dirname(__filename), 'text.txt'), (err, data) => {
-  if(err) {
-    return console.error(err.message);
-  }
-  const text = data.toString();
-  stdout.write(text);
-})
+const file = path.join(__dirname, 'text.txt');
+const stream = fs.createReadStream(file, 'utf-8');
+
+let data = '';
+
+stream.on('data', chunk => data += chunk);
+stream.on('end', () => console.log('End', data));
+stream.on('error', error => console.log('Error', error.message));
